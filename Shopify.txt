@@ -1,0 +1,8 @@
+Envio do pedido:
+1 - Capturar o último pedido e seus detalhes e os detalhes do cliente (Node)
+2 - Enviar para o fornecedor (Whatsapp/Node)
+
+Recebimento do código de rastreio:
+1 - Receber o código do fornecedor (Whatsapp)
+2.1 - Processar o pedido na página do Shopify, atualizandoo Código de rastreio (Node)
+2.2 - Enviar ao Whatsapp do cliente o código (Whatsapp/Node)
