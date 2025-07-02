@@ -4,6 +4,7 @@ const { body, validationResult } = require('express-validator');
 const qrcode = require('qrcode');
 const fileUpload = require('express-fileupload');
 const fs = require('fs');
+const cors = require('cors');
 
 const app = express();
 const port = 8001; // Porta diferente para evitar conflito
@@ -11,6 +12,12 @@ const port = 8001; // Porta diferente para evitar conflito
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload({ debug: false }));
+app.use(cors({
+    origin: [
+        'http://localhost:8080',
+        'https://agencia-connectify.lovable.app/'
+    ]
+}));
 
 // Diretório para armazenar dados do bot
 const dirBot = './bot';
