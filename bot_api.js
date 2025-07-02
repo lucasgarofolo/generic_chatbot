@@ -15,7 +15,8 @@ app.use(fileUpload({ debug: false }));
 app.use(cors({
     origin: [
         'http://localhost:8080',
-        'https://agencia-connectify.lovable.app/'
+        'https://agencia-connectify.lovable.app/whatsapp-config',
+        
     ]
 }));
 
