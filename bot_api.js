@@ -15,7 +15,7 @@ app.use(fileUpload({ debug: false }));
 app.use(cors({
     origin: [
         'http://localhost:8080',
-        'https://agencia-connectify.lovable.app/whatsapp-config',
+        'https://agencia-connectify.lovable.app',
         'https://agencia-connectify.lovable.app',
     ]
 }));
@@ -117,19 +117,29 @@ app.post('/send-message', [
     } else {
         numberZDG = '55' + numberDDD + numberUser + '@c.us';
     }
-    client.sendMessage(numberZDG, message).then(response => {
-        res.status(200).json({
-            status: true,
-            message: 'Mensagem enviada com sucesso!',
-            response: response
+    client.sendMessage(numberZDG, message)
+        .then(response => {
+            // Tenta serializar a resposta para garantir que não há objetos circulares
+            let safeResponse;
+            try {
+                safeResponse = JSON.parse(JSON.stringify(response));
+            } catch (e) {
+                safeResponse = { info: 'Resposta não serializável', raw: String(response) };
+            }
+            res.status(200).json({
+                status: true,
+                message: 'Mensagem enviada com sucesso!',
+                response: safeResponse
+            });
+        })
+        .catch(err => {
+            console.log('Erro ao enviar mensagem:', err); // <-- log para diagnóstico
+            res.status(500).json({
+                status: false,
+                message: 'Erro ao enviar a mensagem!',
+                error: err && err.message ? err.message : err
+            });
         });
-    }).catch(err => {
-        res.status(500).json({
-            status: false,
-            message: 'Erro ao enviar a mensagem!',
-            error: err
-        });
-    });
 });
 
 // Rota de status (health check)
