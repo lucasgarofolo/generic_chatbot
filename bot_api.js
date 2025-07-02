@@ -16,7 +16,7 @@ app.use(cors({
     origin: [
         'http://localhost:8080',
         'https://agencia-connectify.lovable.app/whatsapp-config',
-        
+        'https://agencia-connectify.lovable.app',
     ]
 }));
 
